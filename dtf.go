@@ -22,6 +22,6 @@ func Parse(timeStr string) (time.Time, error) {
 		return ParseCompleteDateWithFractionOfSecond(timeStr)
 	default:
 		var parsedTime time.Time
-		return parsedTime, errors.New("privided string is not W3C-DTF format")
+		return parsedTime, errors.New("provided string is not W3C-DTF format")
 	}
 }
