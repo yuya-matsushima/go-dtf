@@ -6,8 +6,6 @@ import (
 	"time"
 )
 
-var regexZ *regexp.Regexp = regexp.MustCompile("Z$")
-
 // Parse generate time.Time from W3C-DTF string
 func Parse(timeStr string) (time.Time, error) {
 	switch true {
@@ -34,30 +32,38 @@ func ParseYear(timeStr string) (time.Time, error) {
 	return time.Parse("2006", timeStr)
 }
 
+// ParseYearAndMonth generate time.Time from 'YYYY-MM' string
 func ParseYearAndMonth(timeStr string) (time.Time, error) {
 	return time.Parse("2006-01", timeStr)
 }
 
+// ParseCompleteDate generate time.Time from 'YYYY-MM-DD' string
 func ParseCompleteDate(timeStr string) (time.Time, error) {
 	return time.Parse("2006-01-02", timeStr)
 }
 
+// ParseCompleteDateWithMinutes generate time.Time from 'YYYY-MM-DDThh:ii+00:00'
 func ParseCompleteDateWithMinutes(timeStr string) (time.Time, error) {
 	if IsUTC(timeStr) {
+		regexZ := regexp.MustCompile("Z$")
 		timeStr = regexZ.ReplaceAllString(timeStr, "+00:00")
 	}
 	return time.Parse("2006-01-02T15:04-07:00", timeStr)
 }
 
+// ParseCompleteDateWithSeconds generate time.Time from 'YYYY-MM-DDThh:ii:ss+00:00'
 func ParseCompleteDateWithSeconds(timeStr string) (time.Time, error) {
 	if IsUTC(timeStr) {
+		regexZ := regexp.MustCompile("Z$")
 		timeStr = regexZ.ReplaceAllString(timeStr, "+00:00")
 	}
 	return time.Parse("2006-01-02T15:04:05-07:00", timeStr)
 }
 
+// ParseCompleteDateWithSeconds generate time.Time from 'YYYY-MM-DDThh:ii:ss.s+00:00'
 func ParseCompleteDateWithFractionOfSecond(timeStr string) (time.Time, error) {
 	if IsUTC(timeStr) {
+		regexZ := regexp.MustCompile("Z$")
 		timeStr = regexZ.ReplaceAllString(timeStr, "+00:00")
 	}
 	return time.Parse("2006-01-02T15:04:05-07:00", timeStr)
