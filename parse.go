@@ -60,7 +60,7 @@ func ParseCompleteDateWithSeconds(timeStr string) (time.Time, error) {
 	return time.Parse("2006-01-02T15:04:05-07:00", timeStr)
 }
 
-// ParseCompleteDateWithSeconds generate time.Time from 'YYYY-MM-DDThh:ii:ss.s+00:00'
+// ParseCompleteDateWithFractionOfSecond generate time.Time from 'YYYY-MM-DDThh:ii:ss.s+00:00'
 func ParseCompleteDateWithFractionOfSecond(timeStr string) (time.Time, error) {
 	if IsUTC(timeStr) {
 		regexZ := regexp.MustCompile("Z$")
