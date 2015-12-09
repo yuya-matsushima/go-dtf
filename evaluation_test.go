@@ -51,12 +51,12 @@ func TestIsCompleteDate(t *testing.T) {
 }
 
 func TestIsCompleteDateWithMinutes(t *testing.T) {
-	if IsCompleteDateWithMinutes("2015-12-09T16:20+0900") != true {
-		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20+0900")
+	if IsCompleteDateWithMinutes("2015-12-09T16:20+09:00") != true {
+		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20+09:00")
 	}
 
-	if IsCompleteDateWithMinutes("2015-12-09T16:20-0900") != true {
-		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20-1200")
+	if IsCompleteDateWithMinutes("2015-12-09T16:20-09:00") != true {
+		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20-12:00")
 	}
 
 	if IsCompleteDateWithMinutes("2015-12-09T16:20JST") != true {
@@ -67,8 +67,8 @@ func TestIsCompleteDateWithMinutes(t *testing.T) {
 		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20UTC")
 	}
 
-	if IsCompleteDateWithMinutes("2015-12-09T16:20+2500") != false {
-		t.Error("IsCompleteDateWithMinutes must return false: 2015-12-09T16:20+2500")
+	if IsCompleteDateWithMinutes("2015-12-09T16:20+25:00") != false {
+		t.Error("IsCompleteDateWithMinutes must return false: 2015-12-09T16:20+25:00")
 	}
 
 	if IsCompleteDateWithMinutes("2015-12-09T16:20JSTT") != false {
@@ -81,37 +81,47 @@ func TestIsCompleteDateWithMinutes(t *testing.T) {
 }
 
 func TestIsCompleteDateWithSeconds(t *testing.T) {
-	if IsCompleteDateWithSeconds("2015-12-09T16:20:30+0900") != true {
-		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:30+0900")
+	if IsCompleteDateWithSeconds("2015-12-09T16:20:30+09:00") != true {
+		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:30+09:00")
 	}
 
 	if IsCompleteDateWithSeconds("2015-12-09T16:20:30UST") != true {
 		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:30UST")
 	}
 
-	if IsCompleteDateWithSeconds("2015-12-09T16:20:60+0900") != true {
-		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:60+0900")
+	if IsCompleteDateWithSeconds("2015-12-09T16:20:60+09:00") != true {
+		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:60+09:00")
 	}
 
-	if IsCompleteDateWithSeconds("2015-12-09T16:20:61+0900") != false {
-		t.Error("IsCompleteDateWithSeconds must return false: 2015-12-09T16:20:61+0900")
+	if IsCompleteDateWithSeconds("2015-12-09T16:20:61+09:00") != false {
+		t.Error("IsCompleteDateWithSeconds must return false: 2015-12-09T16:20:61+09:00")
 	}
 }
 
 func TestIsCompleteDateWithFractionOfSecond(t *testing.T) {
-	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.45+0900") != true {
-		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.45+0900")
+	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.45+09:00") != true {
+		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.45+09:00")
 	}
 
 	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.45UTC") != true {
 		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.45UTC")
 	}
 
-	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.12345+0900") != true {
-		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.12345+0900")
+	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.12345+09:00") != true {
+		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.12345+09:00")
 	}
 
-	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.9999999999+0900") != true {
-		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.9999999999+0900")
+	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.9999999999+09:00") != true {
+		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.9999999999+09:00")
+	}
+}
+
+func TEstIsTimezoneString(t *testing.T) {
+	if IsTimezoneString("UTC") != true {
+		t.Error("IsTimezoneString must return true: UTC")
+	}
+
+	if IsTimezoneString("+09:00") != false {
+		t.Error("IsTimezoneString must return true: +09:00")
 	}
 }

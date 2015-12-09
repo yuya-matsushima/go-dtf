@@ -5,7 +5,9 @@ import (
 )
 
 var (
-	timezone = "([-+]([01][0-9]|2[0-4])00|[A-Z]{3})"
+	timezone = "([-+]([01][0-9]|2[0-4]):00|[A-Z]{3})"
+
+	timezoneStr = "[A-Z]{3}$"
 
 	year = "[1-9][0-9]{3}"
 
@@ -55,5 +57,10 @@ func IsCompleteDateWithSeconds(timeStr string) bool {
 // IsCompleteDateWithFractionOfSecond check timeStr is 'YYYY-MM-DDThh:mm:ss.sTZD'
 func IsCompleteDateWithFractionOfSecond(timeStr string) bool {
 	match, _ := regexp.MatchString("^"+withFractionOfSecond+"$", timeStr)
+	return match
+}
+
+func IsTimezoneString(timeStr string) bool {
+	match, _ := regexp.MatchString(timezoneStr, timeStr)
 	return match
 }
