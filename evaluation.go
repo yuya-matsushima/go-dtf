@@ -64,3 +64,22 @@ func IsTimezoneString(timeStr string) bool {
 	match, _ := regexp.MatchString(timezoneStr, timeStr)
 	return match
 }
+
+func IsW3CDTF(timeStr string) bool {
+	switch true {
+	case IsYear(timeStr):
+		return true
+	case IsYearAndMonth(timeStr):
+		return true
+	case IsCompleteDate(timeStr):
+		return true
+	case IsCompleteDateWithMinutes(timeStr):
+		return true
+	case IsCompleteDateWithSeconds(timeStr):
+		return true
+	case IsCompleteDateWithFractionOfSecond(timeStr):
+		return true
+	default:
+		return false
+	}
+}
