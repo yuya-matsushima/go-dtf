@@ -116,12 +116,18 @@ func TestIsCompleteDateWithFractionOfSecond(t *testing.T) {
 	}
 }
 
-func TEstIsTimezoneString(t *testing.T) {
+func TestIsTimezoneString(t *testing.T) {
 	if IsTimezoneString("UTC") != true {
 		t.Error("IsTimezoneString must return true: UTC")
 	}
 
 	if IsTimezoneString("+09:00") != false {
 		t.Error("IsTimezoneString must return true: +09:00")
+	}
+}
+
+func TestIsW3CDTF(t *testing.T) {
+	if IsW3CDTF("20151209142233") != false {
+		t.Error("IsW3CDTF must return false: 20151209142233")
 	}
 }

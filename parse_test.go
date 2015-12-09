@@ -5,6 +5,46 @@ import (
 	"time"
 )
 
+func TestParse(t *testing.T) {
+	var expected, result time.Time
+
+	expected = time.Date(2015, time.January, 1, 0, 0, 0, 0, time.UTC)
+	result, _ = Parse("2015")
+	if result != expected {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
+	expected = time.Date(2015, time.January, 1, 0, 0, 0, 0, time.UTC)
+	result, _ = Parse("2015-01")
+	if result != expected {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
+	expected = time.Date(2015, time.January, 15, 0, 0, 0, 0, time.UTC)
+	result, _ = Parse("2015-01-15")
+	if result != expected {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
+	expected = time.Date(2015, time.January, 15, 18, 30, 0, 0, time.UTC)
+	result, _ = Parse("2015-01-15T18:30UTC")
+	if result != expected {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
+	expected = time.Date(2015, time.January, 15, 18, 30, 20, 0, time.UTC)
+	result, _ = Parse("2015-01-15T18:30:20UTC")
+	if result != expected {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
+	expected = time.Date(2015, time.January, 15, 18, 30, 20, 123456789, time.UTC)
+	result, _ = Parse("2015-01-15T18:30:20.123456789UTC")
+	if result != expected {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+}
+
 func TestParseYear(t *testing.T) {
 	expected := time.Date(2015, time.January, 1, 0, 0, 0, 0, time.UTC)
 	result, err := ParseYear("2015")
