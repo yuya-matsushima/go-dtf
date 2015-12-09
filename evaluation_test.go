@@ -59,24 +59,20 @@ func TestIsCompleteDateWithMinutes(t *testing.T) {
 		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20-12:00")
 	}
 
-	if IsCompleteDateWithMinutes("2015-12-09T16:20JST") != true {
-		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20JST")
-	}
-
-	if IsCompleteDateWithMinutes("2015-12-09T16:20UTC") != true {
-		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20UTC")
+	if IsCompleteDateWithMinutes("2015-12-09T16:20Z") != true {
+		t.Error("IsCompleteDateWithMinutes must return true: 2015-12-09T16:20Z")
 	}
 
 	if IsCompleteDateWithMinutes("2015-12-09T16:20+25:00") != false {
 		t.Error("IsCompleteDateWithMinutes must return false: 2015-12-09T16:20+25:00")
 	}
 
-	if IsCompleteDateWithMinutes("2015-12-09T16:20JSTT") != false {
-		t.Error("IsCompleteDateWithMinutes must return false: 2015-12-09T16:20JSTT")
+	if IsCompleteDateWithMinutes("2015-12-09T16:20A") != false {
+		t.Error("IsCompleteDateWithMinutes must return false: 2015-12-09T16:20A")
 	}
 
-	if IsCompleteDateWithMinutes("2015-12-09T16:20jst") != false {
-		t.Error("IsCompleteDateWithMinutes must return false: 2015-12-09T16:20jst")
+	if IsCompleteDateWithMinutes("2015-12-09T16:20z") != false {
+		t.Error("IsCompleteDateWithMinutes must return false: 2015-12-09T16:20z")
 	}
 }
 
@@ -85,8 +81,8 @@ func TestIsCompleteDateWithSeconds(t *testing.T) {
 		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:30+09:00")
 	}
 
-	if IsCompleteDateWithSeconds("2015-12-09T16:20:30UST") != true {
-		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:30UST")
+	if IsCompleteDateWithSeconds("2015-12-09T16:20:30Z") != true {
+		t.Error("IsCompleteDateWithSeconds must return true: 2015-12-09T16:20:30Z")
 	}
 
 	if IsCompleteDateWithSeconds("2015-12-09T16:20:60+09:00") != true {
@@ -99,16 +95,16 @@ func TestIsCompleteDateWithSeconds(t *testing.T) {
 }
 
 func TestIsCompleteDateWithFractionOfSecond(t *testing.T) {
-	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.45+09:00") != true {
+	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.123456789+09:00") != true {
 		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.45+09:00")
 	}
 
-	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.45UTC") != true {
-		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.45UTC")
+	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.45Z") != true {
+		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.45Z")
 	}
 
-	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.12345+09:00") != true {
-		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.12345+09:00")
+	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.123456789+09:00") != true {
+		t.Error("IsCompleteDateWithFractionOfSecond must return true: 2015-12-09T16:20:30.123456789+09:00")
 	}
 
 	if IsCompleteDateWithFractionOfSecond("2015-12-09T16:20:30.9999999999+09:00") != true {
@@ -116,13 +112,13 @@ func TestIsCompleteDateWithFractionOfSecond(t *testing.T) {
 	}
 }
 
-func TestIsTimezoneString(t *testing.T) {
-	if IsTimezoneString("UTC") != true {
-		t.Error("IsTimezoneString must return true: UTC")
+func TestIsUTC(t *testing.T) {
+	if IsUTC("Z") != true {
+		t.Error("IsUTC must return true: Z")
 	}
 
-	if IsTimezoneString("+09:00") != false {
-		t.Error("IsTimezoneString must return true: +09:00")
+	if IsUTC("+09:00") != false {
+		t.Error("IsUTC must return true: +09:00")
 	}
 }
 

@@ -2,8 +2,11 @@ package dtf
 
 import (
 	"errors"
+	"regexp"
 	"time"
 )
+
+var regexZ *regexp.Regexp = regexp.MustCompile("Z$")
 
 // Parse generate time.Time from W3C-DTF string
 func Parse(timeStr string) (time.Time, error) {
@@ -40,25 +43,22 @@ func ParseCompleteDate(timeStr string) (time.Time, error) {
 }
 
 func ParseCompleteDateWithMinutes(timeStr string) (time.Time, error) {
-	if IsTimezoneString(timeStr) {
-		return time.Parse("2006-01-02T15:04MST", timeStr)
-	} else {
-		return time.Parse("2006-01-02T15:04-07:00", timeStr)
+	if IsUTC(timeStr) {
+		timeStr = regexZ.ReplaceAllString(timeStr, "+00:00")
 	}
+	return time.Parse("2006-01-02T15:04-07:00", timeStr)
 }
 
 func ParseCompleteDateWithSeconds(timeStr string) (time.Time, error) {
-	if IsTimezoneString(timeStr) {
-		return time.Parse("2006-01-02T15:04:05MST", timeStr)
-	} else {
-		return time.Parse("2006-01-02T15:04:05-07:00", timeStr)
+	if IsUTC(timeStr) {
+		timeStr = regexZ.ReplaceAllString(timeStr, "+00:00")
 	}
+	return time.Parse("2006-01-02T15:04:05-07:00", timeStr)
 }
 
 func ParseCompleteDateWithFractionOfSecond(timeStr string) (time.Time, error) {
-	if IsTimezoneString(timeStr) {
-		return time.Parse("2006-01-02T15:04:05MST", timeStr)
-	} else {
-		return time.Parse("2006-01-02T15:04:05-07:00", timeStr)
+	if IsUTC(timeStr) {
+		timeStr = regexZ.ReplaceAllString(timeStr, "+00:00")
 	}
+	return time.Parse("2006-01-02T15:04:05-07:00", timeStr)
 }

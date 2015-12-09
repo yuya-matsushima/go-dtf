@@ -27,20 +27,20 @@ func TestParse(t *testing.T) {
 	}
 
 	expected = time.Date(2015, time.January, 15, 18, 30, 0, 0, time.UTC)
-	result, _ = Parse("2015-01-15T18:30UTC")
-	if result != expected {
+	result, _ = Parse("2015-01-15T18:30Z")
+	if result.UnixNano() != expected.UnixNano() {
 		t.Error("Parse return unexpected time object:" + result.String())
 	}
 
 	expected = time.Date(2015, time.January, 15, 18, 30, 20, 0, time.UTC)
-	result, _ = Parse("2015-01-15T18:30:20UTC")
-	if result != expected {
+	result, _ = Parse("2015-01-15T18:30:20+00:00")
+	if result.UnixNano() != expected.UnixNano() {
 		t.Error("Parse return unexpected time object:" + result.String())
 	}
 
 	expected = time.Date(2015, time.January, 15, 18, 30, 20, 123456789, time.UTC)
-	result, _ = Parse("2015-01-15T18:30:20.123456789UTC")
-	if result != expected {
+	result, _ = Parse("2015-01-15T18:30:20.123456789+00:00")
+	if result.UnixNano() != expected.UnixNano() {
 		t.Error("Parse return unexpected time object:" + result.String())
 	}
 }
@@ -98,16 +98,15 @@ func TestParseCompleteDateWithMinutes(t *testing.T) {
 	}
 }
 
-func TestParseCompleteDateWithMinutesContainsTimezoneString(t *testing.T) {
-	location, _ := time.LoadLocation("Asia/Tokyo")
-	expected := time.Date(2015, time.December, 19, 18, 30, 0, 0, location)
-	result, err := ParseCompleteDateWithMinutes("2015-12-19T18:30JST")
+func TestParseCompleteDateWithMinutesContainsUTC(t *testing.T) {
+	expected := time.Date(2015, time.December, 19, 18, 30, 0, 0, time.UTC)
+	result, err := ParseCompleteDateWithMinutes("2015-12-19T18:30+00:00")
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	if result.String() != expected.String() {
+	if result.UnixNano() != expected.UnixNano() {
 		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result.String())
 	}
 }
@@ -116,20 +115,6 @@ func TestParseCompleteDateWithSeconds(t *testing.T) {
 	location, _ := time.LoadLocation("Asia/Tokyo")
 	expected := time.Date(2015, time.December, 19, 18, 30, 22, 0, location)
 	result, err := ParseCompleteDateWithSeconds("2015-12-19T18:30:22+09:00")
-
-	if err != nil {
-		t.Error(err)
-	}
-
-	if result.String() != expected.String() {
-		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result.String())
-	}
-}
-
-func TestParseCompleteDateWithSecondsContainsTimezoneString(t *testing.T) {
-	location, _ := time.LoadLocation("Asia/Tokyo")
-	expected := time.Date(2015, time.December, 19, 18, 30, 22, 0, location)
-	result, err := ParseCompleteDateWithSeconds("2015-12-19T18:30:22JST")
 
 	if err != nil {
 		t.Error(err)
@@ -151,23 +136,5 @@ func TestParseCompleteDateWithFractionOfSecond(t *testing.T) {
 
 	if result.String() != expected.String() {
 		t.Error("ParseCompleteDateWithFractionOfSecond return unexpected time object:" + result.String())
-		t.Error(result)
-		t.Error(expected)
-	}
-}
-
-func TestParseCompleteDateWithFractionOfSecondContainsTimezoneString(t *testing.T) {
-	location, _ := time.LoadLocation("Asia/Tokyo")
-	expected := time.Date(2015, time.December, 19, 18, 30, 22, 123456789, location)
-	result, err := ParseCompleteDateWithSeconds("2015-12-19T18:30:22.123456789JST")
-
-	if err != nil {
-		t.Error(err)
-	}
-
-	if result.String() != expected.String() {
-		t.Error("ParseCompleteDateWithFractionOfSecond return unexpected time object:" + result.String())
-		t.Error(result)
-		t.Error(expected)
 	}
 }

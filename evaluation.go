@@ -5,9 +5,7 @@ import (
 )
 
 var (
-	timezone = "([-+]([01][0-9]|2[0-4]):00|[A-Z]{3})"
-
-	timezoneStr = "[A-Z]{3}$"
+	timezone = "([-+]([01][0-9]|2[0-4]):00|Z)"
 
 	year = "[1-9][0-9]{3}"
 
@@ -60,11 +58,13 @@ func IsCompleteDateWithFractionOfSecond(timeStr string) bool {
 	return match
 }
 
-func IsTimezoneString(timeStr string) bool {
-	match, _ := regexp.MatchString(timezoneStr, timeStr)
+// IsUTC check timeStr is UTC or not
+func IsUTC(timeStr string) bool {
+	match, _ := regexp.MatchString("Z$", timeStr)
 	return match
 }
 
+// IsW3CDTF check timeStr is match W3C-DTF format
 func IsW3CDTF(timeStr string) bool {
 	switch true {
 	case IsYear(timeStr):
