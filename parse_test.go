@@ -27,6 +27,12 @@ func TestParse(t *testing.T) {
 	}
 
 	expected = time.Date(2015, time.January, 15, 18, 30, 0, 0, time.UTC)
+	result, _ = Parse("2015-01-15T18:30+00:00")
+	if result.UnixNano() != expected.UnixNano() {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
+	expected = time.Date(2015, time.January, 15, 18, 30, 0, 0, time.UTC)
 	result, _ = Parse("2015-01-15T18:30Z")
 	if result.UnixNano() != expected.UnixNano() {
 		t.Error("Parse return unexpected time object:" + result.String())
@@ -38,8 +44,20 @@ func TestParse(t *testing.T) {
 		t.Error("Parse return unexpected time object:" + result.String())
 	}
 
+	expected = time.Date(2015, time.January, 15, 18, 30, 20, 0, time.UTC)
+	result, _ = Parse("2015-01-15T18:30:20Z")
+	if result.UnixNano() != expected.UnixNano() {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
 	expected = time.Date(2015, time.January, 15, 18, 30, 20, 123456789, time.UTC)
 	result, _ = Parse("2015-01-15T18:30:20.123456789+00:00")
+	if result.UnixNano() != expected.UnixNano() {
+		t.Error("Parse return unexpected time object:" + result.String())
+	}
+
+	expected = time.Date(2015, time.January, 15, 18, 30, 20, 123456789, time.UTC)
+	result, _ = Parse("2015-01-15T18:30:20.123456789Z")
 	if result.UnixNano() != expected.UnixNano() {
 		t.Error("Parse return unexpected time object:" + result.String())
 	}
@@ -93,21 +111,30 @@ func TestParseCompleteDateWithMinutes(t *testing.T) {
 		t.Error(err)
 	}
 
-	if result.String() != expected.String() {
+	if result.UnixNano() != expected.UnixNano() {
 		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result.String())
 	}
 }
 
 func TestParseCompleteDateWithMinutesContainsUTC(t *testing.T) {
 	expected := time.Date(2015, time.December, 19, 18, 30, 0, 0, time.UTC)
-	result, err := ParseCompleteDateWithMinutes("2015-12-19T18:30+00:00")
+	result1, err1 := ParseCompleteDateWithMinutes("2015-12-19T18:30+00:00")
+	result2, err2 := ParseCompleteDateWithMinutes("2015-12-19T18:30Z")
 
-	if err != nil {
-		t.Error(err)
+	if err1 != nil {
+		t.Error(err1)
 	}
 
-	if result.UnixNano() != expected.UnixNano() {
-		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result.String())
+	if result1.UnixNano() != expected.UnixNano() {
+		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result1.String())
+	}
+
+	if err2 != nil {
+		t.Error(err1)
+	}
+
+	if result2.UnixNano() != expected.UnixNano() {
+		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result2.String())
 	}
 }
 
@@ -120,8 +147,30 @@ func TestParseCompleteDateWithSeconds(t *testing.T) {
 		t.Error(err)
 	}
 
-	if result.String() != expected.String() {
+	if result.UnixNano() != expected.UnixNano() {
 		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result.String())
+	}
+}
+
+func TestParseCompleteDateWithSecondsContainsUTC(t *testing.T) {
+	expected := time.Date(2015, time.December, 19, 18, 30, 22, 0, time.UTC)
+	result1, err1 := ParseCompleteDateWithSeconds("2015-12-19T18:30:22+00:00")
+	result2, err2 := ParseCompleteDateWithSeconds("2015-12-19T18:30:22Z")
+
+	if err1 != nil {
+		t.Error(err1)
+	}
+
+	if result1.UnixNano() != expected.UnixNano() {
+		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result1.String())
+	}
+
+	if err2 != nil {
+		t.Error(err2)
+	}
+
+	if result2.UnixNano() != expected.UnixNano() {
+		t.Error("ParseCompleteDateWithMinutes return unexpected time object:" + result2.String())
 	}
 }
 
@@ -134,7 +183,29 @@ func TestParseCompleteDateWithFractionOfSecond(t *testing.T) {
 		t.Error(err)
 	}
 
-	if result.String() != expected.String() {
+	if result.UnixNano() != expected.UnixNano() {
 		t.Error("ParseCompleteDateWithFractionOfSecond return unexpected time object:" + result.String())
+	}
+}
+
+func TestParseCompleteDateWithFractionOfSecondContainsUTC(t *testing.T) {
+	expected := time.Date(2015, time.December, 19, 18, 30, 22, 123456789, time.UTC)
+	result1, err1 := ParseCompleteDateWithSeconds("2015-12-19T18:30:22.123456789+00:00")
+	result2, err2 := ParseCompleteDateWithSeconds("2015-12-19T18:30:22.123456789Z")
+
+	if err1 != nil {
+		t.Error(err1)
+	}
+
+	if result1.UnixNano() != expected.UnixNano() {
+		t.Error("ParseCompleteDateWithFractionOfSecond return unexpected time object:" + result1.String())
+	}
+
+	if err2 != nil {
+		t.Error(err2)
+	}
+
+	if result2.UnixNano() != expected.UnixNano() {
+		t.Error("ParseCompleteDateWithFractionOfSecond return unexpected time object:" + result2.String())
 	}
 }
