@@ -1,6 +1,6 @@
 language: go
 sudo: false
-branched:
+branches:
   only:
     - master
     - develop
