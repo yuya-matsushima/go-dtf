@@ -13,12 +13,12 @@ go:
   - 1.8
   - tip
 install:
-  - make setup
+  - go get github.com/golang/lint/golint
 script:
   - test -z "$(golint ./... | tee /dev/stderr)"
   - go vet .
-  - make test
-  - make benchmark
+  - go test -v .
+  - go test -bench . -benchmem
 matrix:
   allow_failures:
     - go: tip
