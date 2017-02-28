@@ -90,7 +90,7 @@ func TestParseYear(t *testing.T) {
 	}
 
 	for i, test := range parseTests {
-		ret, err := Parse(test.str)
+		ret, err := ParseYear(test.str)
 		if err != nil {
 			t.Errorf(
 				"#%d ParseYear() should not return error:%s if given %s",
