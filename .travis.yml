@@ -1,5 +1,10 @@
 language: go
 sudo: false
+branched:
+  only:
+    - master
+    - develop
+    - feature/*
 go:
   - 1.4.3
   - 1.5.4
