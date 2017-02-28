@@ -13,7 +13,7 @@ go:
   - 1.8
   - tip
 install:
-  - go get github.com/golang/lint/golint
+  - go get -u github.com/golang/lint/golint
 script:
   - test -z "$(golint ./... | tee /dev/stderr)"
   - go vet .
