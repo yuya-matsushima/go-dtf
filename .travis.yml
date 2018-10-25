@@ -12,7 +12,7 @@ go:
   - 1.10.2
   - tip
 install:
-  - go get -u github.com/golang/lint/golint
+  - go get -u golang.org/x/lint/golint
 script:
   - test -z "$(golint ./... | tee /dev/stderr)"
   - go vet .
